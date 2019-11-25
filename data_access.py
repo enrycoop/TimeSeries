@@ -2,6 +2,9 @@ from cassandra.cluster import Cluster
 
 
 class DatabaseWrapper(object):
+    """
+    This class manage database access.
+    """
     def __init__(self, address=None, port=9042):
         if address is None:
             address = ['127.0.0.1']

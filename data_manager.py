@@ -1,6 +1,7 @@
 from sklearn.preprocessing import *
+from datetime import datetime
 import numpy as np
-
+import math
 
 class DataManager(object):
     """
@@ -107,5 +108,31 @@ class TimeSeriesConstructor(object):
                 userid = self.data[i][user_index]
         self.timeseries = X
 
-    def construct(self):
-        return self.timeseries
+    def timeDiffinDays(self, first, second):
+        date_format = "%Y-%m-%d"  #"%d/%m/%Y"
+        a = datetime.strptime(first, date_format)
+        b = datetime.strptime(second, date_format)
+        if a > b:
+            delta = a - b
+        else:
+            delta = b - a
+        return delta.days
+
+    def construct(self, slice_dim=4):
+        output = []
+        account_transactions = self.timeseries.copy()
+        for transactions in account_transactions:
+            if len(transactions) >= slice_dim:
+                date = transactions[0][self.time_index]
+                slice = []
+                for i in range(len(transactions)):
+                    trans = transactions[i]
+                    temp = trans[self.time_index]
+                    trans[self.time_index] = self.timeDiffinDays(temp,date)
+                    date = temp
+                    slice.append(trans)
+                    if len(slice) == slice_dim:
+                        output.append(slice.copy())
+                        slice = []
+        return output
+
