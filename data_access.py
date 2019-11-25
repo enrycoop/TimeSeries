@@ -13,7 +13,7 @@ class DatabaseWrapper(object):
 
     def getAllTransactions(self):
         cluster = Cluster(self.address, self.port)
-        session = cluster.connect('test_transactions')
+        session = cluster.connect('saltedge')
         rows = session.execute('SELECT * FROM transactions')
         X = []
         for row in rows:
