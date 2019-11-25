@@ -1,7 +1,7 @@
 from data_access import *
 from data_manager import *
 
-# p
+
 def printdata(data):
     for i in range(10):
         print(data[i])
