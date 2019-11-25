@@ -1,4 +1,3 @@
-from cassandra.cluster import Cluster
 from data_access import *
 from data_manager import *
 
@@ -13,7 +12,6 @@ def printSlices(data):
     print(f'min {np.array(lengths).min()}')
     print(f'max {np.array(lengths).max()}')
     print(f'mean {np.array(lengths).mean()}')
-
 
 
 if __name__ == '__main__':
