@@ -15,15 +15,16 @@ class DatabaseWrapper(object):
         cluster = Cluster(self.address, self.port)
         session = cluster.connect('saltedge')
         rows = session.execute('SELECT * FROM transactions')
-        print('data extracted.')
+        print('data received.')
         X = []
         for row in rows:
             X.append([
                 row.account_id,
-                row.date,
+                str(row.date),
                 row.amount,
                 row.balance,
                 row.k_symbol,
                 row.operation,
                 row.type])
+        print('data extracted.')
         return X

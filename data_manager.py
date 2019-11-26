@@ -84,7 +84,7 @@ class DataManager(object):
         try:
             X2 = method(X1[:, self.num_indexes], **kwargs)
             result = np.concatenate((X1[:, self.nom_indexes], X2), axis=1)
-            self.data = list(result)
+            self.data = result.tolist()
         except:
             print('failed normalization by indexes.')
 
@@ -107,6 +107,7 @@ class TimeSeriesConstructor(object):
                 slice = [self.data[i]]
                 userid = self.data[i][user_index]
         self.timeseries = X
+        self.labels = []
 
     def timeDiffinDays(self, first, second):
         date_format = "%Y-%m-%d"  #"%d/%m/%Y"
@@ -118,8 +119,9 @@ class TimeSeriesConstructor(object):
             delta = b - a
         return delta.days
 
-    def construct(self, slice_dim=4):
-        output = []
+    def construct_slices(self, slice_dim=4):
+        X = []
+        y = []
         account_transactions = self.timeseries.copy()
         for transactions in account_transactions:
             if len(transactions) >= slice_dim:
@@ -129,10 +131,44 @@ class TimeSeriesConstructor(object):
                     trans = transactions[i]
                     temp = trans[self.time_index]
                     trans[self.time_index] = self.timeDiffinDays(temp,date)
+                    #trans.append(self.timeDiffinDays(temp,date))
+                    trans = [float(x) for x in trans[:self.user_index] + trans[self.user_index+1:]]
                     date = temp
-                    slice.append(trans)
                     if len(slice) == slice_dim:
-                        output.append(slice.copy())
+                        X.append(slice.copy())
+                        y.append(trans)
                         slice = []
-        return output
+                    else:
+                        slice.append(trans)
+        self.timeseries = X.copy()
+        self.labels = y.copy()
+        return X, y
+
+    def normalize(self):
+        norm_X = []
+        norm_y = normalize(np.array(self.labels.copy())).tolist()
+
+        for slice in self.timeseries.copy():
+            norm_X.append(normalize(np.array(slice.copy())).tolist())
+
+        return norm_X, norm_y
+
+    def cross_validation(self, X, y, split=0.33):
+        test_X = []
+        test_y = []
+        train_X = []
+        train_y = []
+        for i in range(len(X)):
+            if i < len(X)*0.33:
+                test_X.append(X[i])
+                test_y.append(y[i][1])
+            else:
+                train_X.append(X[i])
+                train_y.append(y[i][1])
+
+        return test_X, test_y, train_X, train_y
+
+
+
+
 
