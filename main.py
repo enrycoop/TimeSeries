@@ -13,7 +13,8 @@ def printSlices(data):
 
 
 if __name__ == '__main__':
-    db = DatabaseWrapper(address=['192.168.1.139'])
+    #127.0.0.1 -
+    db = DatabaseWrapper()
     data = db.getAllTransactions()
     print('first')
     #printdata(data)
