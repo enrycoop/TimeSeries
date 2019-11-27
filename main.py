@@ -18,8 +18,8 @@ def printSlices(X,y):
 
 
 if __name__ == '__main__':
-    #127.0.0.1 -
-    db = DatabaseWrapper()
+    #'82.61.15.68'
+    db = DatabaseWrapper(['192.168.1.139'])
     data = db.getAllTransactions()
     print('first')
     printdata(data)
@@ -36,13 +36,14 @@ if __name__ == '__main__':
     print('normalizing')
     n_features=len(X[0][0])
     model = Sequential()
-
+    hidden_nodes = 700
     test_X, test_y, train_X, train_y = tm.cross_validation(X, y)
-    model.add(LSTM(600, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
-    model.add(LSTM(600, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
-    model.add(LSTM(600, activation='relu'))
-    model.add(Dense(1, activation='relu'))
-    model.compile(optimizer='adam', loss='mse')
+    model.add(LSTM(hidden_nodes, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
+    model.add(LSTM(hidden_nodes, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
+    model.add(LSTM(hidden_nodes, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
+    model.add(LSTM(hidden_nodes, activation='relu'))
+    model.add(Dense(1))
+    model.compile(optimizer='adam', loss='mae')
     model.fit(np.array(train_X), np.array(train_y),epochs=10)
 
     y_predicted = model.predict(np.array(test_X))
@@ -52,7 +53,7 @@ if __name__ == '__main__':
     print(f'max: {np.array(test_y).max()}')
 
     array = [(x[0],y) for (x,y) in zip(y_predicted,test_y)]
-    array.sort(key=lambda tup: tup[1])
+    #array.sort(key=lambda tup: tup[1])
     y_predicted = [x for (x,y) in array]
     test_y = [y for (x,y) in array]
 
