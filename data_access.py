@@ -28,3 +28,8 @@ class DatabaseWrapper(object):
                 row.type])
         print('data extracted.')
         return X
+
+
+if __name__ == '__main__':
+    X = DatabaseWrapper().getAllTransactions()
+    print(set([x[4] for x in X]))

@@ -1,0 +1,230 @@
+Clus run 'dataframe-weka.filters.unsupervised.attribute.StringToNominal-R18-weka.filters.unsupervised.attribute.StringToNominal-R19-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.RenameNominalValues-R19-NC:A,D:B,N:?-weka.filters.unsupervised.attribute.Remove-R3-weka.filters.unsupervised.attribute.Remove-R3-4-weka.filters.unsupervised.attribute.Remove-R14-15-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-Clast-Llast'
+********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+Date: 09/12/19 10.26
+File: external_libraries/conf.out
+Attributes: 14 (input: 13, output: 1)
+Missing values: No
+
+[General]
+Verbose = 0
+Compatibility = Latest
+RandomSeed = 1
+ResourceInfoLoaded = No
+
+[Data]
+File = 5_fold/train4.arff
+TestSet = 5_fold/test4.arff
+PruneSet = None
+XVal = 10
+RemoveMissingTarget = No
+NormalizeData = None
+
+[Attributes]
+Target = 14
+Clustering = 14
+Descriptive = 1-13
+Key = None
+Disable = None
+Weights = Normalize
+ClusteringWeights = 1.0
+ReduceMemoryNominalAttrs = No
+GIS = None
+
+[Constraints]
+Syntactic = None
+MaxSize = Infinity
+MaxError = 0.0
+MaxDepth = Infinity
+
+[Nominal]
+MEstimate = 1.0
+
+[Model]
+MinimalWeight = 2.0
+MinimalNumberExamples = 0
+MinimalKnownWeight = 0.0
+ParamTuneNumberFolds = 10
+NominalSubsetTests = Yes
+
+[Tree]
+Heuristic = GainRatio
+HeuristicComplexity = N2
+SetDistance = GSMDistance
+TupleDistance = Euclidean
+TSDistance = DTW
+PruningMethod = Default
+BinarySplit = Yes
+ConvertToRules = No
+AlternativeSplits = No
+Optimize = {}
+MSENominal = No
+SplitSampling = None
+MissingClusteringAttrHandling = EstimateFromParentNode
+MissingTargetAttrHandling = ParentNode
+InductionOrder = DepthFirst
+EntropyType = StandardEntropy
+ConsiderUnlableInstancesInIGCalc = No
+SpatialMatrix = Binary
+SpatialMeasure = GlobalMoran
+Bandwidth = 0.001
+Longlat = No
+NumNeightbours = 0.0
+Alpha = 1.0
+SplitPosition = Exact
+
+[Ensemble]
+Iterations = 101
+EnsembleMethod = RForest
+VotingType = ProbabilityDistribution
+SelectRandomSubspaces = 4
+SelectRandomTargetSubspaces = SQRT
+RandomOutputSelection = None
+PrintAllModels = No
+PrintAllModelFiles = No
+PrintAllModelInfo = No
+PrintPaths = No
+Optimize = No
+OOBestimate = No
+FeatureRanking = None
+FeatureRankingPerTarget = No
+SymbolicWeight = 0.5
+SortRankingByRelevance = Yes
+WriteEnsemblePredictions = No
+EnsembleRandomDepth = No
+BagSelection = -1
+BagSize = 0
+NumberOfThreads = 1
+
+[SemiSupervised]
+SemiSupervisedMethod = PCT
+StoppingCriteria = NoneAdded
+UnlabeledCriteria = KMostConfident
+ConfidenceThreshold = 0.9
+ConfidenceMeasure = RandomGaussian
+Iterations = 101
+K = 5
+UnlabeledData = resources/unlabeled.arff
+PercentageLabeled = 5
+UseWeights = No
+AirbagTrials = 0
+ExhaustiveSearchThresholds = [0.5,0.6,0.7,0.8,0.9,0.99]
+OOBErrorCalculation = LabeledOnly
+Normalization = Standardization
+Aggregation = Average
+CalibrateHmcThreshold = No
+PruningWhenTuning = No
+InternalFolds = 5
+WeightScoresFile = NO
+PossibleWeights = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
+
+[Output]
+ShowModels = {Default, Pruned, Others}
+TrainErrors = Yes
+ValidErrors = Yes
+TestErrors = Yes
+AllFoldModels = Yes
+AllFoldErrors = No
+AllFoldDatasets = No
+UnknownFrequency = No
+BranchFrequency = No
+ShowInfo = {Count}
+PrintModelAndExamples = No
+WriteErrorFile = Yes
+WriteModelFile = No
+WriteOOBFile = No
+WritePredictions = {None}
+GzipOutput = No
+ModelIDFiles = No
+WriteCurves = No
+OutputPythonModel = Yes
+OutputROSSubspaces = No
+OutputJSONModel = No
+OutputDatabaseQueries = No
+OutputClowdFlowsJSON = No
+
+Run: 01
+*******
+
+Statistics
+----------
+
+FTValue (FTest): 1.0
+Induction Time: 133.989 sec
+Pruning Time: 0 sec
+Model information:
+     Default: Nodes = 1 (Leaves: 1)
+     Original: FOREST with 101 models (Total nodes: 4207 and leaves: 2154)
+
+Training error
+--------------
+
+Number of examples: 364
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 324 | 0 | 324
+             0 |  40 | 0 |  40
+     -------------------------
+               | 364 | 0 | 364
+     Accuracy: 0.89011
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 |  0 |
+     --------------------------
+             1 | 324 |  0 | 324
+             0 |  14 | 26 |  40
+     --------------------------
+               | 338 | 26 | 364
+     Accuracy: 0.961538
+     Cramer's coefficient: 0.789352
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.112])
+   Default        : [1]
+   Original       : [4.9678]
+
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 118 | 3 | 121
+             0 |  11 | 4 |  15
+     -------------------------
+               | 129 | 7 | 136
+     Accuracy: 0.897059
+     Cramer's coefficient: 0.342912
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.112])
+   Default        : [1.0032]
+   Original       : [4.9879]
+
+Default Model
+*************
+
+[1] [324.0]: 364
+
+Original Model
+**************
+
+Forest with 101 models
+

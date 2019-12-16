@@ -1,5 +1,3 @@
-
-
 import numpy as np
 from data_access import *
 from data_manager import DataManager, TimeSeriesConstructor
@@ -84,7 +82,6 @@ def load_files(path):
 
 
 if __name__ == '__main__':
-
     db = DatabaseWrapper(['82.61.15.68'])
     data = db.getAllTransactions()
     print('first')
@@ -94,17 +91,15 @@ if __name__ == '__main__':
     indexed_data = dataManager.nominalToNumeric()
     print('indexing')
     printdata(indexed_data)
-    n_steps = 8
+    n_steps = 7
     tm = TimeSeriesConstructor(indexed_data)
     print('construct slices')
     X,y = tm.construct_slices(slice_dim=n_steps)
     printSlices(X, y)
-    print('normalizing')
-    
+
     test_X, test_y, train_X, train_y = tm.cross_validation(X, y)
     dump_files('',test_X, test_y, train_X, train_y)
     '''
-
     test_X, test_y, train_X, train_y = load_files()
     printSlices(test_X,test_y)
     printSlices(train_X,train_y)

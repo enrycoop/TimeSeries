@@ -3,6 +3,7 @@ from datetime import datetime
 import numpy as np
 import math
 
+
 class DataManager(object):
     """
     This Class can be used to manage all aspects of data
