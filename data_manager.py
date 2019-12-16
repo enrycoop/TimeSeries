@@ -4,6 +4,16 @@ import numpy as np
 import math
 
 
+def timeDiffinDays(first, second):
+    date_format = "%Y-%m-%d"  # "%d/%m/%Y"
+    a = datetime.strptime(first, date_format)
+    b = datetime.strptime(second, date_format)
+    if a > b:
+        delta = a - b
+    else:
+        delta = b - a
+    return delta.days
+
 class DataManager(object):
     """
     This Class can be used to manage all aspects of data
@@ -110,15 +120,7 @@ class TimeSeriesConstructor(object):
         self.timeseries = X
         self.labels = []
 
-    def timeDiffinDays(self, first, second):
-        date_format = "%Y-%m-%d"  #"%d/%m/%Y"
-        a = datetime.strptime(first, date_format)
-        b = datetime.strptime(second, date_format)
-        if a > b:
-            delta = a - b
-        else:
-            delta = b - a
-        return delta.days
+
 
     def construct_slices(self, slice_dim=4):
         X = []
@@ -131,7 +133,7 @@ class TimeSeriesConstructor(object):
                 for i in range(len(transactions)):
                     trans = transactions[i]
                     temp = trans[self.time_index]
-                    trans[self.time_index] = self.timeDiffinDays(temp,date)
+                    trans[self.time_index] = timeDiffinDays(temp,date)
                     #trans.append(self.timeDiffinDays(temp,date))
                     trans = [float(x) for x in trans[:self.user_index] + trans[self.user_index+1:]]
                     date = temp
