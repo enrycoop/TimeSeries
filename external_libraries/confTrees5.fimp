@@ -3,8 +3,8 @@ Ranking method: RForest
 Ensemble size: 5
 attributeDatasetIndex	attributeName	[Root mean squared error (RMSE):overallRank]	[Root mean squared error (RMSE):overall]
 -------------------------------------------------------------------------------------------------------------------------
-6	operation	[1]	[0.01231788409948432]
-4	balance	[2]	[0.010961792236559624]
-2	days	[3]	[0.00976155007125313]
+6	operation	[1]	[0.04095488183050918]
+2	days	[2]	[0.0367631964982107]
+4	balance	[3]	[0.03458571416612094]
 5	k_symbol	[4]	[0.0]
-7	type	[5]	[-0.0013626876798503282]
+7	type	[4]	[0.0]

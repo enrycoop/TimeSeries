@@ -1,0 +1,233 @@
+Clus run transactions-weka.filters.unsupervised.attribute.StringToNominal-Rlast-weka.filters.unsupervised.attribute.StringToNominal-R6-weka.filters.unsupervised.attribute.StringToNominal-R5
+*********************************************************************************************************************************************************************************************
+
+Date: 19/12/19 17.09
+File: external_libraries/conf.out
+Attributes: 7 (input: 5, output: 1)
+Missing values: No
+
+[General]
+Verbose = 0
+Compatibility = Latest
+RandomSeed = 1
+ResourceInfoLoaded = No
+
+[Data]
+File = resources/train250.arff
+TestSet = resources/test250.arff
+PruneSet = None
+XVal = 10
+RemoveMissingTarget = No
+NormalizeData = None
+
+[Attributes]
+Target = 3
+Clustering = 3
+Descriptive = 2,4-7
+Key = 1
+Disable = None
+Weights = Normalize
+ClusteringWeights = 1.0
+ReduceMemoryNominalAttrs = No
+GIS = None
+
+[Constraints]
+Syntactic = None
+MaxSize = Infinity
+MaxError = 0.0
+MaxDepth = Infinity
+
+[Nominal]
+MEstimate = 1.0
+
+[Model]
+MinimalWeight = 2.0
+MinimalNumberExamples = 0
+MinimalKnownWeight = 0.0
+ParamTuneNumberFolds = 10
+NominalSubsetTests = Yes
+
+[Tree]
+Heuristic = VarianceReduction
+HeuristicComplexity = N2
+SetDistance = GSMDistance
+TupleDistance = Euclidean
+TSDistance = DTW
+PruningMethod = Default
+FTest = 0.005
+BinarySplit = No
+ConvertToRules = No
+AlternativeSplits = No
+Optimize = {}
+MSENominal = No
+SplitSampling = None
+MissingClusteringAttrHandling = EstimateFromParentNode
+MissingTargetAttrHandling = ParentNode
+InductionOrder = DepthFirst
+EntropyType = StandardEntropy
+ConsiderUnlableInstancesInIGCalc = No
+SpatialMatrix = Binary
+SpatialMeasure = GlobalMoran
+Bandwidth = 0.001
+Longlat = No
+NumNeightbours = 0.0
+Alpha = 1.0
+SplitPosition = Exact
+
+[Ensemble]
+Iterations = [5,100]
+EnsembleMethod = RForest
+VotingType = ProbabilityDistribution
+SelectRandomSubspaces = 3
+SelectRandomTargetSubspaces = SQRT
+RandomOutputSelection = None
+PrintAllModels = No
+PrintAllModelFiles = No
+PrintAllModelInfo = No
+PrintPaths = No
+Optimize = No
+OOBestimate = Yes
+FeatureRanking = RForest
+FeatureRankingPerTarget = No
+SymbolicWeight = 0.5
+SortRankingByRelevance = Yes
+WriteEnsemblePredictions = No
+EnsembleRandomDepth = No
+BagSelection = -1
+BagSize = 0
+NumberOfThreads = 1
+
+[SemiSupervised]
+SemiSupervisedMethod = PCT
+StoppingCriteria = NoneAdded
+UnlabeledCriteria = Threshold
+ConfidenceThreshold = 0.8
+ConfidenceMeasure = Variance
+Iterations = 10
+K = 5
+UnlabeledData = resources/unlabeled250.arff
+PercentageLabeled = 5
+UseWeights = No
+AirbagTrials = 0
+ExhaustiveSearchThresholds = [0.5,0.6,0.7,0.8,0.9,0.99]
+OOBErrorCalculation = LabeledOnly
+Normalization = Standardization
+Aggregation = Average
+CalibrateHmcThreshold = No
+PruningWhenTuning = No
+InternalFolds = 3
+WeightScoresFile = NO
+PossibleWeights = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
+
+[Output]
+ShowModels = {Default, Pruned, Others}
+TrainErrors = Yes
+ValidErrors = Yes
+TestErrors = Yes
+AllFoldModels = No
+AllFoldErrors = No
+AllFoldDatasets = No
+UnknownFrequency = No
+BranchFrequency = No
+ShowInfo = {Key}
+PrintModelAndExamples = No
+WriteErrorFile = Yes
+WriteModelFile = No
+WriteOOBFile = No
+WritePredictions = {None}
+GzipOutput = No
+ModelIDFiles = No
+WriteCurves = No
+OutputPythonModel = No
+OutputROSSubspaces = No
+OutputJSONModel = No
+OutputDatabaseQueries = No
+OutputClowdFlowsJSON = No
+
+Run: 01
+*******
+
+Statistics
+----------
+
+FTValue (FTest): 0.005
+Induction Time: 1.894 sec
+Pruning Time: 0 sec
+Model information:
+     Default: Nodes = 1 (Leaves: 1)
+     Forest with 5 trees: FOREST with 5 models (Total nodes: 77 and leaves: 46)
+     Forest with 100 trees: FOREST with 100 models (Total nodes: 1574 and leaves: 918)
+
+Training error
+--------------
+
+Number of examples: 250
+Mean absolute error (MAE)
+   Default        : [1919.1704]
+   Forest with 5 trees: [688.0829]
+   Forest with 100 trees: [725.6297]
+Mean squared error (MSE)
+   Default        : [6838013.2703]
+   Forest with 5 trees: [2572625.324]
+   Forest with 100 trees: [2456248.9583]
+Root mean squared error (RMSE)
+   Default        : [2614.9595]
+   Forest with 5 trees: [1603.9406]
+   Forest with 100 trees: [1567.2425]
+Weighted root mean squared error (RMSE) (Weights [0])
+   Default        : [1]
+   Forest with 5 trees: [0.6134]
+   Forest with 100 trees: [0.5993]
+Root Relative Squared Error (RRMSE)
+   Default        : [1]
+   Forest with 5 trees: [0.6134]
+   Forest with 100 trees: [0.5993]
+Pearson correlation coefficient
+   Default        : [0], Avg r^2: 0
+   Forest with 5 trees: [0.7936], Avg r^2: 0.6298
+   Forest with 100 trees: [0.8088], Avg r^2: 0.6542
+
+Testing error
+-------------
+
+Number of examples: 520756
+Mean absolute error (MAE)
+   Default        : [1903.5985]
+   Forest with 5 trees: [715.0249]
+   Forest with 100 trees: [769.7656]
+Mean squared error (MSE)
+   Default        : [6330465.5365]
+   Forest with 5 trees: [2626594.8052]
+   Forest with 100 trees: [2569054.483]
+Root mean squared error (RMSE)
+   Default        : [2516.0416]
+   Forest with 5 trees: [1620.6773]
+   Forest with 100 trees: [1602.827]
+Weighted root mean squared error (RMSE) (Weights [0])
+   Default        : [0.9622]
+   Forest with 5 trees: [0.6198]
+   Forest with 100 trees: [0.6129]
+Root Relative Squared Error (RRMSE)
+   Default        : [1.0004]
+   Forest with 5 trees: [0.6444]
+   Forest with 100 trees: [0.6373]
+Pearson correlation coefficient
+   Default        : [0], Avg r^2: 0
+   Forest with 5 trees: [0.7668], Avg r^2: 0.588
+   Forest with 100 trees: [0.7728], Avg r^2: 0.5972
+
+Default Model
+*************
+
+[1420.6204]
+
+Forest with 5 trees Model
+*************************
+
+Forest with 5 models
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+

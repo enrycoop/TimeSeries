@@ -11,7 +11,6 @@ from random import randint
 from random import seed
 
 
-
 def printdata(data):
     for i in range(10):
         print(data[i])
@@ -52,23 +51,46 @@ def load_files(path):
     return test_X, test_y, train_X, train_y
 
 
+def load_LSTM_files(path,n_train):
+    with open(path+f'LSTM_DATA/test{n_train}_X.pkl','rb') as fl:
+        test_X = load(fl)
+
+    with open(path+f'LSTM_DATA/test{n_train}_y.pkl', 'rb') as fl:
+        test_y = load(fl)
+
+    with open(path+f'LSTM_DATA/train{n_train}_X.pkl', 'rb') as fl:
+        train_X = load(fl)
+
+    with open(path+f'LSTM_DATA/train{n_train}_y.pkl', 'rb') as fl:
+        train_y = load(fl)
+    return test_X, test_y, train_X, train_y
+
+
 def create_experimental_data(X, y, dim=(25,50,100,200,350,500)):
     seed()
     for n_train in dim:
         set_indexes = set()
         while len(set_indexes) < n_train:
-            set_indexes.add(randint(0, len(data)))
+            set_indexes.add(randint(0, len(X)))
         train_X = []
+        train_y = []
         test_X = []
+        test_y = []
         for i in range(len(X)):
             if i in set_indexes:
                 train_X.append(X[i])
+                train_y.append(y[i])
             else:
+                test_y.append(y[i])
                 test_X.append(X[i])
         with open(f'LSTM_DATA/train{n_train}_X.pkl', 'wb') as fl:
             dump(np.array(train_X), fl)
         with open(f'LSTM_DATA/test{n_train}_X.pkl', 'wb') as fl:
             dump(np.array(train_X), fl)
+        with open(f'LSTM_DATA/train{n_train}_y.pkl', 'wb') as fl:
+            dump(np.array(train_y), fl)
+        with open(f'LSTM_DATA/test{n_train}_y.pkl', 'wb') as fl:
+            dump(np.array(train_y), fl)
 
 
 if __name__ == '__main__':
@@ -86,39 +108,41 @@ if __name__ == '__main__':
     tm = TimeSeriesConstructor(indexed_data)
     print('construct slices')
     X,y = tm.construct_slices(slice_dim=n_steps)
+    print(f'min:{np.array(y).min()}')
     printSlices(X, y)
     create_experimental_data(X,y)
-    '''
-    test_X, test_y, train_X, train_y = tm.cross_validation(X, y)
 
-    n_features = len(train_X[0][0])
-    n_steps = len(train_X[0])
-    model = Sequential()
-    hidden_nodes = 700
-    model.add(LSTM(hidden_nodes, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
-    model.add(LSTM(hidden_nodes, activation='relu'))
-    model.add(Dense(1))
-    model.compile(optimizer='adam', loss='mae')
-    model.fit(np.array(train_X), np.array(train_y), epochs=15)
+    for dim in (25,50,100,200,350,500):
+        test_X, test_y, train_X, train_y = load_LSTM_files('',dim)
 
-    y_predicted = model.predict(np.array(test_X))
-    mae = np.array([abs(x[0] - y) for (x, y) in zip(y_predicted, test_y)]).mean()
-    print(f'mae: {mae}')
-    print(f'min: {np.array(test_y).min()}')
-    print(f'max: {np.array(test_y).max()}')
+        n_features = len(train_X[0][0])
+        n_steps = len(train_X[0])
+        model = Sequential()
+        hidden_nodes = 700
+        model.add(LSTM(hidden_nodes, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
+        model.add(LSTM(hidden_nodes, activation='relu'))
+        model.add(Dense(1))
+        model.compile(optimizer='adam', loss='mae')
+        model.fit(np.array(train_X), np.array(train_y), epochs=100)
 
-    array = [(x[0], y) for (x, y) in zip(y_predicted, test_y)]
-    # array.sort(key=lambda tup: tup[1])
-    y_predicted = [x for (x, y) in array]
-    test_y = [y for (x, y) in array]
+        y_predicted = model.predict(np.array(test_X))
+        mae = np.array([abs(x[0] - y) for (x, y) in zip(y_predicted, test_y)]).mean()
+        print(f'mae: {mae}')
+        print(f'min: {np.array(test_y).min()}')
+        print(f'max: {np.array(test_y).max()}')
+        '''
+        array = [(x[0], y) for (x, y) in zip(y_predicted, test_y)]
+        # array.sort(key=lambda tup: tup[1])
+        y_predicted = [x for (x, y) in array]
+        test_y = [y for (x, y) in array]
 
-    _ngraphics = 10
-    size = int(len(test_y) / _ngraphics)
-    for i in range(_ngraphics):
-        plt.figure(figsize=(15, 17))
-        plt.plot(test_y[i * size:(i + 1) * size], label='real', color='b', markersize=0.01)
-        plt.plot(y_predicted[i * size:(i + 1) * size], linestyle='--', label='predicted', color='g', markersize=0.01)
-        plt.ylabel('dollars')
-        plt.xlabel('example')
-        plt.show()
-    '''
+        _ngraphics = 10
+        size = int(len(test_y) / _ngraphics)
+        for i in range(_ngraphics):
+            plt.figure(figsize=(15, 17))
+            plt.plot(test_y[i * size:(i + 1) * size], label='real', color='b', markersize=0.01)
+            plt.plot(y_predicted[i * size:(i + 1) * size], linestyle='--', label='predicted', color='g', markersize=0.01)
+            plt.ylabel('dollars')
+            plt.xlabel('example')
+            plt.show()
+            '''

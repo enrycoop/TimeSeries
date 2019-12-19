@@ -121,7 +121,6 @@ class TimeSeriesConstructor(object):
         self.labels = []
 
 
-
     def construct_slices(self, slice_dim=4):
         X = []
         y = []
@@ -139,7 +138,7 @@ class TimeSeriesConstructor(object):
                     date = temp
                     if len(slice) == slice_dim:
                         X.append(slice.copy())
-                        y.append(trans)
+                        y.append(trans[2])
                         slice = []
                     else:
                         slice.append(trans)

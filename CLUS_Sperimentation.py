@@ -58,25 +58,24 @@ def extract_statistics(path, first='   Original       : [',indexes=(6,10,14,22))
 
 if __name__ == '__main__':
     seed()
-    sizes = [25, 50, 100, 200, 350, 500]
+    sizes = [250, 500, 1000, 2000, 3500, 5000]
     n = 10
-    with open('ssl_pct.csv', 'w+') as ssl_pct:
+    with open('clus_rf.csv', 'w+') as ssl_pct:
         ssl_pct.write('n_samples;mae;mse;rmse;rrmse\n')
-    for i in sizes:
-        maes = 0
-        mses = 0
-        rmses = 0
-        rrmses = 0
-        for j in range(n):
-            split_files('resources/trans.arff', i)
-            set_conf_file('external_libraries/conf.s', i)
-            subprocess.run(['java', '-jar','-Xmx4048m', 'external_libraries/clusSSL.jar', '-ssl', f'external_libraries/conf.s'])
-            mae, mse, rmse, rrmse = extract_statistics('external_libraries/conf.out',indexes=(6,9,12,18))
-            maes += mae
-            mses += mse
-            rmses += rmse
-            rrmses += rrmse
-        with open('ssl_pct.csv', 'w+') as ssl_pct:
-            ssl_pct.write(f'{i};{maes};{mses};{rmses};{rrmses}\n')
+        for i in sizes:
+            maes = 0
+            mses = 0
+            rmses = 0
+            rrmses = 0
+            for j in range(n):
+                split_files('resources/trans.arff', i)
+                set_conf_file('external_libraries/conf.s', i)
+                subprocess.run(['java', '-jar','-Xmx4048m', 'external_libraries/clusSSL.jar','-forest', f'external_libraries/conf.s'])
+                mae, mse, rmse, rrmse = extract_statistics('external_libraries/conf.out',first='   Forest with 100 trees: [',indexes=(7,11,15,23))
+                maes += mae
+                mses += mse
+                rmses += rmse
+                rrmses += rrmse
+            ssl_pct.write(f'{i};{maes/n};{mses/n};{rmses/n};{rrmses/n}\n')
 
 
