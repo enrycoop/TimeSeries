@@ -3,35 +3,40 @@ RandomSeed = 1
 Verbose = 0
 
 [Data]
-File = 5_fold/train4.arff
-TestSet = 5_fold/test4.arff
+File = resources/train25.arff
+TestSet = resources/test25.arff
 
 [Attributes]
-Target = 14
-Descriptive = 1-13
-Clustering = 14
-Weights = Normalize
+Target = 3
+Descriptive = 2,4-7
+Key = 1
 
 [Tree]
-Heuristic = GainRatio
+Heuristic = VarianceReduction
+FTest = [0.001,0.005,0.01,0.05,0.1,0.125]
+BinarySplit = No
 
 [Ensemble]
-Iterations = 101
+Iterations = [5,100]
 EnsembleMethod = RForest
+VotingType = ProbabilityDistribution
+SelectRandomSubspaces = LOG
+FeatureRanking = RForest
+WriteEnsemblePredictions = No
 
 [SemiSupervised]
-Iterations = 101
-ConfidenceMeasure = RandomGaussian
-UnlabeledData = resources/unlabeled.arff
+UnlabeledData = resources/unlabeled25.arff
 SemiSupervisedMethod = PCT
-UnlabeledCriteria = KMostConfident
-ConfidenceThreshold = 0.9
-
 Normalization = Standardization
+InternalFolds = 3
+ConfidenceThreshold = 0.8
 
 [Output]
 TrainErrors = Yes
 TestErrors = Yes
 WriteErrorFile = Yes
-OutputPythonModel = Yes
+OutputPythonModel = No
+AllFoldModels = No
+ShowInfo = Key
+
 

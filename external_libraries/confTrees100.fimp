@@ -1,0 +1,10 @@
+Ensemble method: RForest
+Ranking method: RForest
+Ensemble size: 100
+attributeDatasetIndex	attributeName	[Root mean squared error (RMSE):overallRank]	[Root mean squared error (RMSE):overall]
+-------------------------------------------------------------------------------------------------------------------------
+4	balance	[1]	[0.3155594283932112]
+6	operation	[2]	[0.20142988832371675]
+2	days	[3]	[0.11063549697266582]
+7	type	[4]	[0.07992634546619337]
+5	k_symbol	[5]	[0.0]

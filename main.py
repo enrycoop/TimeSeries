@@ -7,6 +7,9 @@ from pickle import *
 from keras import Sequential
 from keras.layers import LSTM, Dense
 import arff
+from random import randint
+from random import seed
+
 
 
 def printdata(data):
@@ -17,6 +20,7 @@ def printdata(data):
 def printSlices(X,y):
     for i in range(10):
         print(X[i],'---->',y[i])
+
 
 def dump_files(path,test_X, test_y, train_X, train_y ):
     with open(path+'resources/test_X.pkl', 'wb') as fl:
@@ -48,31 +52,28 @@ def load_files(path):
     return test_X, test_y, train_X, train_y
 
 
-db = DatabaseWrapper()
-data = db.getAllTransactions()
-
-prev_date = data[0][1]
-prev_id = data[0][0]
-
-final_data = []
-for i in range(len(data)):
-    X = data[i].copy()
-    if data[i][0]!=prev_id:
-        prev_id = data[i][0]
-        X[1] = 0
-    else:
-        X[1] = timeDiffinDays(data[i][1], prev_date)
-    prev_date = data[i][1]
-    final_data.append(X)
-
-print(final_data[0:10])
-arff.dump('resources/trans.arff', final_data, relation='transactions', names=['account_id','days','amount','balance','k_symbol','operation','type'])
+def create_experimental_data(X, y, dim=(25,50,100,200,350,500)):
+    seed()
+    for n_train in dim:
+        set_indexes = set()
+        while len(set_indexes) < n_train:
+            set_indexes.add(randint(0, len(data)))
+        train_X = []
+        test_X = []
+        for i in range(len(X)):
+            if i in set_indexes:
+                train_X.append(X[i])
+            else:
+                test_X.append(X[i])
+        with open(f'LSTM_DATA/train{n_train}_X.pkl', 'wb') as fl:
+            dump(np.array(train_X), fl)
+        with open(f'LSTM_DATA/test{n_train}_X.pkl', 'wb') as fl:
+            dump(np.array(train_X), fl)
 
 
-
-'''
 if __name__ == '__main__':
-    db = DatabaseWrapper(['82.61.15.68'])
+
+    db = DatabaseWrapper()
     data = db.getAllTransactions()
     print('first')
     printdata(data)
@@ -86,7 +87,8 @@ if __name__ == '__main__':
     print('construct slices')
     X,y = tm.construct_slices(slice_dim=n_steps)
     printSlices(X, y)
-
+    create_experimental_data(X,y)
+    '''
     test_X, test_y, train_X, train_y = tm.cross_validation(X, y)
 
     n_features = len(train_X[0][0])
@@ -119,8 +121,4 @@ if __name__ == '__main__':
         plt.ylabel('dollars')
         plt.xlabel('example')
         plt.show()
-'''
-
-
-
-
+    '''
