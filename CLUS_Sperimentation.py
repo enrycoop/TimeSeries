@@ -3,7 +3,7 @@ from random import seed
 from random import randint
 
 
-def split_files(path, n_train):
+def split_files(path, iter, n_train):
     with open(path, 'r') as fl:
         lines = fl.readlines()
     intest = lines[:lines.index('@data\n')+1]
@@ -18,10 +18,10 @@ def split_files(path, n_train):
             train.append(data[i])
         else:
             test.append(data[i])
-    with open(f'resources/train{n_train}.arff', 'w') as fl:
+    with open(f'resources/{iter}/train{n_train}.arff', 'w') as fl:
         fl.writelines(intest)
         fl.writelines(train)
-    with open(f'resources/test{n_train}.arff', 'w') as fl:
+    with open(f'resources/{iter}/test{n_train}.arff', 'w') as fl:
         fl.writelines(intest)
         fl.writelines(test)
     separator = ','
@@ -30,17 +30,17 @@ def split_files(path, n_train):
         y = test[i].split(',')
         y[2] = '?'
         test[i] = separator.join(y)
-    with open(f'resources/unlabeled{n_train}.arff', 'w') as fl:
+    with open(f'resources/{iter}/unlabeled{n_train}.arff', 'w') as fl:
         fl.writelines(intest)
         fl.writelines((test))
 
 
-def set_conf_file(path,n_examples):
+def set_conf_file(path,i,n_examples):
     with open(path, 'r') as fl:
         lines = fl.readlines()
-    lines[lines.index('[Data]\n')+1] = f'File = resources/train{n_examples}.arff\n'
-    lines[lines.index('[Data]\n') + 2] = f'TestSet = resources/test{n_examples}.arff\n'
-    lines[lines.index('[SemiSupervised]\n') + 1] = f'UnlabeledData = resources/unlabeled{n_examples}.arff\n'
+    lines[lines.index('[Data]\n')+1] = f'File = resources/{i}/train{n_examples}.arff\n'
+    lines[lines.index('[Data]\n') + 2] = f'TestSet = resources/{i}/test{n_examples}.arff\n'
+    lines[lines.index('[SemiSupervised]\n') + 1] = f'UnlabeledData = resources/{i}/unlabeled{n_examples}.arff\n'
     with open(f'external_libraries/conf.s', 'w') as fl:
         fl.writelines(lines)
 
@@ -60,7 +60,11 @@ if __name__ == '__main__':
     seed()
     sizes = [250, 500, 1000, 2000, 3500, 5000]
     n = 10
-    with open('clus_rf.csv', 'w+') as ssl_pct:
+    for i in sizes:
+        for j in range(n):
+            print(f'i:{i}\nj:{j}')
+            split_files('resources/trans.arff', j, i)
+    '''with open('clus_rf.csv', 'w') as ssl_pct:
         ssl_pct.write('n_samples;mae;mse;rmse;rrmse\n')
         for i in sizes:
             maes = 0
@@ -68,14 +72,14 @@ if __name__ == '__main__':
             rmses = 0
             rrmses = 0
             for j in range(n):
-                split_files('resources/trans.arff', i)
-                set_conf_file('external_libraries/conf.s', i)
+                
+                set_conf_file('external_libraries/conf.s', j,i)
                 subprocess.run(['java', '-jar','-Xmx4048m', 'external_libraries/clusSSL.jar','-forest', f'external_libraries/conf.s'])
                 mae, mse, rmse, rrmse = extract_statistics('external_libraries/conf.out',first='   Forest with 100 trees: [',indexes=(7,11,15,23))
                 maes += mae
                 mses += mse
                 rmses += rmse
                 rrmses += rrmse
-            ssl_pct.write(f'{i};{maes/n};{mses/n};{rmses/n};{rrmses/n}\n')
+            ssl_pct.write(f'{i};{maes/n};{mses/n};{rmses/n};{rrmses/n}\n')'''
 
 
