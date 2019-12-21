@@ -165,10 +165,10 @@ class TimeSeriesConstructor(object):
         for i in range(len(X)):
             if i < len(X)*0.33:
                 test_X.append(X[i])
-                test_y.append(y[i][1])
+                test_y.append(int(y[i][3]))
             else:
                 train_X.append(X[i])
-                train_y.append(y[i][1])
+                train_y.append(int(y[i][3]))
 
         return test_X, test_y, train_X, train_y
 

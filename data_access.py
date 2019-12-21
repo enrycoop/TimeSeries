@@ -16,7 +16,7 @@ class DatabaseWrapper(object):
         cluster = Cluster(self.address, self.port)
         session = cluster.connect('saltedge')
         rows = session.execute('SELECT * FROM transactions')
-        print('data received.')
+        print('connected.')
         X = []
         for row in rows:
             X.append([
