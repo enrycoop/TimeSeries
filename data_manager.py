@@ -130,20 +130,22 @@ class TimeSeriesConstructor(object):
                 date = transactions[0][self.time_index]
                 slice = []
                 for i in range(len(transactions)):
-                    trans = transactions[i]
+                    trans = transactions[i].copy()
                     temp = trans[self.time_index]
                     trans[self.time_index] = timeDiffinDays(temp,date)
+
                     #trans.append(self.timeDiffinDays(temp,date))
-                    trans = [float(x) for x in trans[:self.user_index] + trans[self.user_index+1:]]
+                    trans = [float(x) for x in (trans[:self.user_index] + trans[self.user_index+1:])]
                     date = temp
                     if len(slice) == slice_dim:
                         X.append(slice.copy())
-                        y.append(trans[2])
+                        y.append(trans[1])
                         slice = []
                     else:
                         slice.append(trans)
         self.timeseries = X.copy()
         self.labels = y.copy()
+
         return X, y
 
     def normalize(self):

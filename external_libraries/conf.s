@@ -3,8 +3,8 @@ RandomSeed = 1
 Verbose = 0
 
 [Data]
-File = resources/train250.arff
-TestSet = resources/test250.arff
+File = resources/0/train250.arff
+TestSet = resources/0/test250.arff
 
 [Attributes]
 Target = 3
@@ -25,7 +25,7 @@ FeatureRanking = RForest
 WriteEnsemblePredictions = No
 
 [SemiSupervised]
-UnlabeledData = resources/unlabeled250.arff
+UnlabeledData = resources/0/unlabeled250.arff
 SemiSupervisedMethod = PCT
 Normalization = Standardization
 InternalFolds = 3
