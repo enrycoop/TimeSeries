@@ -61,7 +61,7 @@ def extract_statistics(path, first='   Original       : [',indexes=(6,10,14,22))
 
 if __name__ == '__main__':
     seed()
-    sizes = [250,500,1000,2000, 3500, 5000]
+    sizes = [5000,3500]
     n = 10
 
     for i in sizes:
@@ -69,11 +69,11 @@ if __name__ == '__main__':
         mses = 0
         rmses = 0
         rrmses = 0
-        with open(f'ssl_pct{i}.csv', 'w') as ssl_pct:
+        with open(f'ssl_rf{i}.csv', 'w') as ssl_pct:
             ssl_pct.write('mae;mse;rmse;rrmse\n')
             for j in range(n):
                 set_conf_file('external_libraries/conf.s', j, i)
-                subprocess.run(['java', '-jar', '-Xmx4048m', 'external_libraries/clusSSL.jar','-ssl', f'external_libraries/conf.s'])
+                subprocess.run(['java', '-jar', '-Xmx4048m', 'external_libraries/clusSSL.jar','-forest','-ssl', f'external_libraries/conf.s'])
                 mae, mse, rmse, rrmse = extract_statistics('external_libraries/conf.out',indexes=(6,9,12,18))
                 maes += mae
                 mses += mse
@@ -81,5 +81,3 @@ if __name__ == '__main__':
                 rrmses += rrmse
                 ssl_pct.write(f'{mae};{mse};{rmse};{rrmse}\n')
             ssl_pct.write(f'{maes/n};{mses/n};{rmses/n};{rrmses/n}\n')
-
-

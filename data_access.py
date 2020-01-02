@@ -31,6 +31,15 @@ class DatabaseWrapper(object):
         return X
 
 
+
 if __name__ == '__main__':
-    X = DatabaseWrapper().getAllTransactions()
-    print(set([x[4] for x in X]))
+
+    '''
+    with open('trans.csv','w') as fl:
+        for x in X:
+            line = ''
+            for i in x:
+                line+=str(i)+sep
+            line = line[:len(line)-1]+'\n'
+            fl.write(line)'''
+
