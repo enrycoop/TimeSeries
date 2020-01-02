@@ -1,0 +1,145 @@
+Clus run transactions-weka.filters.unsupervised.attribute.StringToNominal-R5-7
+******************************************************************************
+
+Date: 02/01/20 16.30
+File: external_libraries/conf.xval
+Attributes: 7 (input: 5, output: 1)
+Missing values: No
+
+[General]
+Verbose = 0
+Compatibility = Latest
+RandomSeed = 0
+ResourceInfoLoaded = No
+
+[Data]
+File = trans2.arff
+TestSet = None
+PruneSet = None
+XVal = 10
+RemoveMissingTarget = No
+NormalizeData = None
+
+[Attributes]
+Target = 5
+Clustering = 5
+Descriptive = 2-4,6-7
+Key = None
+Disable = 1
+Weights = Normalize
+ClusteringWeights = 1.0
+ReduceMemoryNominalAttrs = No
+GIS = None
+
+[Constraints]
+Syntactic = None
+MaxSize = Infinity
+MaxError = 0.0
+MaxDepth = Infinity
+
+[Nominal]
+MEstimate = 1.0
+
+[Model]
+MinimalWeight = 2.0
+MinimalNumberExamples = 0
+MinimalKnownWeight = 0.0
+ParamTuneNumberFolds = 10
+NominalSubsetTests = Yes
+
+[Tree]
+Heuristic = GainRatio
+HeuristicComplexity = N2
+SetDistance = GSMDistance
+TupleDistance = Euclidean
+TSDistance = DTW
+PruningMethod = Default
+BinarySplit = Yes
+ConvertToRules = No
+AlternativeSplits = No
+Optimize = {}
+MSENominal = No
+SplitSampling = None
+MissingClusteringAttrHandling = EstimateFromParentNode
+MissingTargetAttrHandling = ParentNode
+InductionOrder = DepthFirst
+EntropyType = StandardEntropy
+ConsiderUnlableInstancesInIGCalc = No
+SpatialMatrix = Binary
+SpatialMeasure = GlobalMoran
+Bandwidth = 0.001
+Longlat = No
+NumNeightbours = 0.0
+Alpha = 1.0
+SplitPosition = Exact
+
+[Ensemble]
+Iterations = 100
+EnsembleMethod = RForest
+VotingType = ProbabilityDistribution
+SelectRandomSubspaces = 0
+SelectRandomTargetSubspaces = SQRT
+RandomOutputSelection = None
+PrintAllModels = No
+PrintAllModelFiles = No
+PrintAllModelInfo = No
+PrintPaths = No
+Optimize = No
+OOBestimate = No
+FeatureRanking = None
+FeatureRankingPerTarget = No
+SymbolicWeight = 0.5
+SortRankingByRelevance = Yes
+WriteEnsemblePredictions = No
+EnsembleRandomDepth = No
+BagSelection = -1
+BagSize = 0
+NumberOfThreads = 1
+
+[SemiSupervised]
+SemiSupervisedMethod = PCT
+StoppingCriteria = NoneAdded
+UnlabeledCriteria = Threshold
+ConfidenceThreshold = 0.8
+ConfidenceMeasure = Variance
+Iterations = 10
+K = 5
+UnlabeledData = 
+PercentageLabeled = 5
+UseWeights = No
+AirbagTrials = 0
+ExhaustiveSearchThresholds = [0.5,0.6,0.7,0.8,0.9,0.99]
+OOBErrorCalculation = LabeledOnly
+Normalization = MinMaxNormalization
+Aggregation = Average
+CalibrateHmcThreshold = No
+PruningWhenTuning = No
+InternalFolds = 3
+WeightScoresFile = NO
+PossibleWeights = [0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
+
+[Output]
+ShowModels = {Default, Pruned, Others}
+TrainErrors = Yes
+ValidErrors = Yes
+TestErrors = Yes
+AllFoldModels = Yes
+AllFoldErrors = No
+AllFoldDatasets = No
+UnknownFrequency = No
+BranchFrequency = No
+ShowInfo = {Count}
+PrintModelAndExamples = No
+WriteErrorFile = No
+WriteModelFile = No
+WriteOOBFile = No
+WritePredictions = {None}
+GzipOutput = No
+ModelIDFiles = No
+WriteCurves = No
+OutputPythonModel = No
+OutputROSSubspaces = No
+OutputJSONModel = No
+OutputDatabaseQueries = No
+OutputClowdFlowsJSON = No
+
